@@ -60,7 +60,7 @@ function isAlphaNumeric(char) {
   }
 }
 
-// FREQUENCY COUNTER EXAMPLE
+// FREQUENCY COUNTER EXAMPLE #1
 // Write a function called same that accepts 2 arrays. The function should return true if every value in the array
 // has it's corresponding value squared in the second array. The frequency of values must be the same. Order doesn't matter.
 // Ex: [1,2,3] and [4, 1, 9] -> true
@@ -115,4 +115,61 @@ function sameRefactored(arr1, arr2) {
   return true
 }
 
-console.log(sameRefactored([1,2,3], [4, 1, 9, 2]))
+// console.log(sameRefactored([1,2,3], [4, 1, 9, 2]))
+
+
+// FREQUENCY COUNTER EXAMPLE #2 - O(n)
+// Anagrams: Given 2 strings, write a function to determine if the second string is an anagram of the first.
+// An anagram is a word, phrase or name formed by rearranging the letters of another, such as cinema, formed from iceman.
+// Assume all inputs are single words. No spaces or punctuation, all lowercase, no numbers.
+// Ex: validAnagram("", "") -> true
+// Ex: validAnagram("aaz", "zza") -> false
+// Ex: validAnagram("anagram", "nagaram") -> true
+
+function validAnagram(str1, str2) {
+  if (str1.length !== str2.length) {
+    return false;
+  }
+  let frequency1 = {};
+  let frequency2 = {};
+  for (let letter of str1) {
+    frequency1[letter] = (frequency1[letter] || 0) + 1
+  }
+  for (let letter of str2) {
+    frequency2[letter] = (frequency2[letter] || 0) + 1
+  }
+  for (let key in frequency1) {
+    if (!(key in frequency2)) {
+      return false;
+    }
+    if (frequency1[key] !== frequency2[key]){
+      return false;
+    }
+  }
+  return true;
+}
+
+// console.log(validAnagram("anagram", "nagaram"));
+
+// Second Solution
+function validAnagram2(first, second) {
+  if (first.length !== second.length) {
+    return false;
+  }
+  const lookup = {};
+  for (let letter of first) {
+    lookup[letter] ? lookup[letter] += 1 : lookup[letter] = 1;
+  }
+  for (let i = 0; i < second.length; i++) {
+    let letter = second[i];
+    // If you can't find letter or if letter is 0 (since 0 is falsey), then return false
+    if(!lookup[letter]) {
+      return false;
+    } else {
+      lookup[letter] -= 1;
+    }
+  }
+  return true;
+}
+
+console.log(validAnagram2("anagram", "nagaram"));
