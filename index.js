@@ -47,7 +47,7 @@ function charCountRefactored(str) {
   return obj;
 }
 
-console.log(charCountRefactored("Helllo WORLDDD!!"));
+// console.log(charCountRefactored("Helllo WORLDDD!!"));
 
 function isAlphaNumeric(char) {
   let code = char.charCodeAt(0);
@@ -59,3 +59,60 @@ function isAlphaNumeric(char) {
     return true;
   }
 }
+
+// FREQUENCY COUNTER EXAMPLE
+// Write a function called same that accepts 2 arrays. The function should return true if every value in the array
+// has it's corresponding value squared in the second array. The frequency of values must be the same. Order doesn't matter.
+// Ex: [1,2,3] and [4, 1, 9] -> true
+// Ex: [1,2,3] and [1, 9] -> false
+// Ex: [1,2,1] and [4, 4, 1] -> false  (must be same frequency)
+
+// Naive solution: O(n^2)
+function same (arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    // loop over the first array and ask for the index of that square within the second array
+    let correctIndex = arr2.indexOf(arr1[i] ** 2)
+    if (correctIndex === -1) {
+      // if it is -1 (meaning that the square it not in the second array, return false)
+      return false
+    }
+    // If the index is within the second array, we are then going to remove it from the array and then contiue on with
+    // the next index of the first array
+    arr2.splice(correctIndex,1)
+  }
+  return true
+}
+
+// console.log(same([1,2,3], [4, 1, 2]))
+
+// Refactored better solution - O(n)
+// multiple loops is better than one nested loop
+function sameRefactored(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+  let frequencyCounter1 = {}
+  let frequencyCounter2 = {}
+  for (let val of arr1) {
+    frequencyCounter1[val] = (frequencyCounter1[val] || 0) + 1
+  }
+  for (let val of arr2) {
+    frequencyCounter2[val] = (frequencyCounter2[val] || 0) + 1
+  }
+  for (let key in frequencyCounter1) {
+    // is the square of the number a key is the second array? If it's not, then return false
+    if (!(key ** 2 in frequencyCounter2)) {
+      return false
+    }
+    // Do the values of the keys match? if not, return false.
+    if (frequencyCounter2[key ** 2] !== frequencyCounter1[key]) {
+      return false
+    }
+  }
+  return true
+}
+
+console.log(sameRefactored([1,2,3], [4, 1, 9, 2]))
