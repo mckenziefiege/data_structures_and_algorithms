@@ -338,3 +338,44 @@ function searchRefactored(arr, val) {
   }
   return -1;
 }
+
+
+
+// Frequency Counter - O(n)
+// write a function called sameFrequency. Given 2 positive integers, find out if the two #'s have the same freqeuncy of digits.
+// Ex: sameFrequency(182, 281) -> true
+// Ex: sameFrequency(34, 14) -> false
+// Ex: sameFrequency(3589578, 5879385) -> true
+// Ex: sameFrequency(22, 222) -> false
+
+
+// Restate the problem: Write a function that accepts 2 positive numbers and returns true if the 2 nums have the same frequency of digits and false if they don't.
+// What are the inputs?: Accepts 2 numbers. positive integers.
+// What are the outputs?: true or false.
+// Break it down:
+// 1) frequency counter pattern -> create an object for each with the key as the num and the value as the frequency
+// turn each num into a string
+function sameFrequency(num1, num2) {
+  if (num1.toString().length !== num2.toString().length) {
+    return false;
+  }
+  let num1Freq = {};
+  let num2Freq = {};
+  for (let char of num1.toString()) {
+    num1Freq[char] ? num1Freq[char] += 1 : num1Freq[char] = 1;
+  }
+  for (let char of num2.toString()) {
+    num2Freq[char] ? num2Freq[char] += 1 : num2Freq[char] = 1;
+  }
+  for (let key in num1Freq) {
+    if (!num2Freq[key]) {
+      return false;
+    }
+    if (num1Freq[key] !== num2Freq[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(sameFrequency(3589578, 5879385))
