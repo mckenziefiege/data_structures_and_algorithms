@@ -378,4 +378,45 @@ function sameFrequency(num1, num2) {
   return true;
 }
 
-console.log(sameFrequency(3589578, 5879385))
+// console.log(sameFrequency(3589578, 5879385));
+
+
+// areThereDuplicates - write a function called areThereDuplicates which accepts a variable number of arguments, and checks
+// whether there are any duplicates among the arguments passed. You can solve this using the frequency countern pattern or the multiple pointers pattern.
+// Ex: areThereDuplicates(1, 2, 3) -> false
+// Ex: areThereDuplicates(1, 2, 2) -> true
+// Ex: areThereDuplicates('a', 'b', 'c', 'a') -> true
+
+function areThereDuplicates(...args) {
+  let frequencyObj = {};
+  if (args.length === 0 || args.length === 1) {
+    return false;
+  }
+  for (let val of args) {
+    frequencyObj[val] ? frequencyObj[val] += 1 : frequencyObj[val] = 1;
+  }
+  for (let key in frequencyObj) {
+    if (frequencyObj[key] > 1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// console.log(areThereDuplicates(1, 2, 3, 4));
+
+// areThereDuplicates Mutiple pointers example
+function areThereDuplicatesPointer(...args) {
+  // Two pointers
+ args.sort((a,b) => a > b);
+ let start = 0;
+ let next = 1;
+ while(next < args.length){
+   if(args[start] === args[next]){
+       return true
+   }
+   start++
+   next++
+ }
+ return false
+}
