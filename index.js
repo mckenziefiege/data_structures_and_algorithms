@@ -57,3 +57,26 @@ function isAlphaNumeric(char) {
     return true;
   }
 }
+
+// Multiple Pointers - isSubsequence - write a function called isSubsequence which takes in two strings and checks whether the characters in the first string
+// form a subsequence of characters in the second string. In other words, the function should check whether the characters in the first string
+// appear somewhere in the second string, without their order changing.
+// Ex: isSubsequence('hello', 'hello world') -> true
+// Ex: isSubsequence('sing', 'sting') -> true
+// Ex: isSubsequence('abc', 'acb') -> false (order matters)
+
+// Steps -
+// 1) create a variable with an index of 0, and a second with a value of 1. Loop through str2.
+function isSubsequence (str1, str2) {
+  let i = 0;
+  let j = 0;
+  if (!str1) return true;
+  while (j < str2.length) {
+    if (str2[j] === str1[i]) i++;
+    if (i === str1.length) return true;
+    j++;
+  }
+  return false;
+}
+
+console.log(isSubsequence('sing', 'sting'));
