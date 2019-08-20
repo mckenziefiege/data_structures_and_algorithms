@@ -420,3 +420,36 @@ function areThereDuplicatesPointer(...args) {
  }
  return false
 }
+
+
+// averagePair - Mutiple pointers example - write a function called averagePair. Given a sorted array of integers and a target average, determine if there is a pair
+// of value in there array where the average of the pair equals the target avergage. There may be more than one pair that matches the target.
+// time - O(n), space - O(1)
+// Ex: averagePair([1, 2, 3], 2.5) -> true
+// Ex: averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8) -> true
+// Ex: averagePair([-1, 0, 3, 4, 5, 6], 4.1) -> false
+// Ex: averagePair([], 4) -> false
+
+// Restate the problem: write a function that accepts a sorted array of integers and a target average. Return false, if there is a pair of 2 integers that averages to the target and return false if there isn't.
+// Inputs - An array (of sorted integers), and a target average
+// outputs - true or false
+function averagePair(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
+  while (left < right) {
+    let sum = arr[left] + arr[right]
+    if (sum / 2 === target) {
+      return true;
+    }
+    else {
+      if (sum / 2 > target) {
+        right--;
+      } else {
+        left++;
+      }
+    }
+  }
+  return false;
+}
+
+// console.log(averagePair([1, 3, 3, 5, 5, 7, 10, 12, 25], 8));
