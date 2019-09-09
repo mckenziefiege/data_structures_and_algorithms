@@ -53,3 +53,44 @@ function maxSubarraySumRefactored (arr, num) {
   }
   return max;
 }
+
+
+// Sliding Window - minSubArrayLen - write a function that accepts 2 parameters- and array of positive integers, and a positive integers
+// the function should return a minimal length of a contiguous subarray of which the sum is greater than or equal to the integer passed to the function
+// if there isn't one, return 0.
+// Time complexity O(n)
+// Ex: minSubArrayLen([2, 3, 1, 2, 4, 3], 7) -> 2 (b/c [4, 3] is the smallest subarray)
+// Ex: minSubArrayLen([2, 1, 6, 5, 4], 9) -> 2 (b/c [5, 4])
+// Ex: minSubArrayLen([3, 1, 7, 11, 2, 9, 8, 62, 33], 52) -> 1 (b/c [62] is greater than 52)
+// Ex: minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55) -> 5
+// Ex: minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 95) -> 0
+
+function minSubArrayLen(arr, sum) {
+  let total = 0;
+  let start = 0;
+  let end = 0;
+  let min = Infinity;
+
+  while (start < arr.length) {
+    // if current window doesn't add up to the given sum then
+		// move the window to right
+    if(total < sum && end < arr.length){
+      total += arr[end];
+			end++;
+    }
+    // if current window adds up to at least the sum given then
+		// we can shrink the window
+    else if(total >= sum){
+      min = Math.min(min, end - start);
+			total -= arr[start];
+			start++;
+    }
+    // current total less than required total but we reach the end, need this or else we'll be in an infinite loop
+    else {
+      break;
+    }
+  }
+  return min === Infinity ? 0 : min;
+}
+
+console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55));
