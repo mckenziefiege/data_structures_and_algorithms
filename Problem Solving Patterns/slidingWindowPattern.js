@@ -93,4 +93,40 @@ function minSubArrayLen(arr, sum) {
   return min === Infinity ? 0 : min;
 }
 
-console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55));
+// console.log(minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 55));
+
+
+
+// findLongestSubstring - write a function which accepts a string and returns the length of the longest substring with all distinct characters
+// time complexity - O(n)
+// Ex: findLongestSubstring('') -> 0
+// Ex: findLongestSubstring('rithmschool') -> 7
+// Ex: findLongestSubstring('thisisawesome') -> 6
+// Ex: findLongestSubstring('thecatinthehat') -> 7
+// Ex: findLongestSubstring('bbbbb') -> 1
+// Ex: findLongestSubstring('thisishowwedoit') -> 6
+
+function findLongestSubstring(str) {
+  let longest = 0;
+  let seen = {};
+  let start = 0;
+
+  if (str.length === 0) return 0;
+
+  // loop over string a great variable for current letter
+  for (let i = 0; i < str.length; i++) {
+    let char = str[i];
+    // check if the letter is already in the object
+    if (seen[char]) {
+      start = Math.max(start, seen[char]);
+    }
+
+    longest = Math.max(longest, i - start + 1);
+
+    seen[char] = i + 1;
+  }
+
+  return longest;
+}
+
+// console.log(findLongestSubstring('thecatinthehat'))
